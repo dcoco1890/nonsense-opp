@@ -1,0 +1,72 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --fs-h1: 3rem;
+  --fs-h2: 2.25rem;
+  --fs-h3: 1.25rem;
+  --fs-body: 1rem;
+
+  --clr-accent: #16e0bd;
+  --clr-main-font: #111;
+  --clr-bg-light: #eee;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+body {
+  color: var(--clr-main-font);
+  background-color: var(--clr-bg-light);
+}
+
+main {
+  padding: 5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.poke-box {
+  margin: 0.25rem;
+  flex-basis: 24%;
+  padding: 1.5rem;
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #333;
+  border-radius: 10px;
+  font-size: var(--fs-h3);
+  height: 300px;
+  background-color: #fff;
+  overflow: hidden;
+}
+.poke-img > img {
+  height: auto;
+  width: 200px;
+}
+.poke-img {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+#header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #333;
+}
+.name-link {
+  text-decoration: underline;
+  cursor: pointer;
+}

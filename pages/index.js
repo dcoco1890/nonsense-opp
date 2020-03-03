@@ -1,13 +1,13 @@
 import fetch from "isomorphic-unfetch";
 import Poke from "../comps/Poke";
 import Layout from "../comps/Layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Index = props => {
   // Grabbing monster data returned form getInitProps
   // CurrentMons is what we display to the user
   const [allMonsters] = useState(props.poke);
-  const [currentMons, setCurrent] = useState(allMonsters);
+  const [currentMons, setCurrent] = useState([]);
 
   // ******** Filter functions to separate mons by region ***************
   const kanto = allMonsters.filter((mon, i) => {
@@ -15,6 +15,9 @@ const Index = props => {
       return true;
     }
   });
+  useEffect(() => {
+    setCurrent(kanto);
+  }, []);
 
   const johto = allMonsters.filter((mon, i) => {
     if (i >= 151 && i < 251) {
@@ -38,7 +41,14 @@ const Index = props => {
       content={
         <main>
           {currentMons.map((mon, i) => {
-            return <Poke key={i} name={mon.name} img={mon.sprites.large} />;
+            return (
+              <Poke
+                key={i}
+                name={mon.name}
+                img={mon.sprites.normal}
+                type={mon.types}
+              />
+            );
           })}
         </main>
       }

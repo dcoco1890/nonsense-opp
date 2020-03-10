@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import * as dbModels from "./models";
 
 const options = {
   useNewUrlParser: true,
@@ -6,15 +7,18 @@ const options = {
   useFindAndModify: false,
   useUnifiedTopology: true
 };
+const connectMongo = async () => {
+  const connection = await mongoose.createConnection(
+    process.env.MONGO_URI,
+    options
+  );
 
-mongoose.connect(process.env.MONGO_URI, options).then(
-  () => {
-    console.log("db connected");
-  },
-  err => {
-    console.log("err connecting to db");
-    console.log(err);
-  }
-);
+  return {
+    connection,
+    models: {
+      dbModels
+    }
+  };
+};
 
-module.exports = mongoose.connection;
+export default connectMongo;

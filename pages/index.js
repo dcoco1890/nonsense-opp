@@ -40,6 +40,7 @@ const Index = props => {
       johto={() => clickJohto()}
       content={
         <main>
+          {/* <div>{console.log(process.env.MONGO_URI)}</div> */}
           {currentMons.map((mon, i) => {
             return (
               <Poke

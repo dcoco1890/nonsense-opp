@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
-const PokemonSchema = new Schema({
+const PokemonSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -12,4 +11,4 @@ const PokemonSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("Pokemon", PokemonSchema);
+module.exports = PokemonSchema;

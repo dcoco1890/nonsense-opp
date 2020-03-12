@@ -1,40 +1,39 @@
-import mongoConnect from "../../lib/mongoConnect";
+import mongoMiddle from "../../lib/mongoMiddle";
+import apiHandler from "../../lib/apiHandler";
 
-export default async (req, res) => {
-  //   const connection = await mongoose.createConnection(
-  //     process.env.MONGO_URI,
-  //     options
-  //   );
-
-  const { connection, models } = await mongoConnect();
+export default mongoMiddle(async (req, res, connection, models) => {
+  const { method } = req;
+  const stuff = req.body;
 
   return new Promise(resolve => {
-    const { method } = req;
-    if (method === "GET") {
-      models.Pokemon.find({}, (err, poke) => {
-        if (err) {
-          connection.close();
-          res.status(500).json({ err });
-          resolve();
-        } else {
-          res.status(200).json(poke);
-          connection.close();
-          resolve();
-        }
-      });
-    } else if (method === "POST") {
-      models.Pokemon.create({ name: "gay" }, (err, rese) => {
-        if (err) {
-          connection.close();
-          res.status(500).json({ err });
-          resolve();
-        } else {
-          res.status(200).json(rese);
-
-          connection.close();
-          resolve();
-        }
-      });
-    }
+    apiHandler(res, method, {
+      GET: response => {
+        models.Pokemon.find({}, (err, poke) => {
+          if (err) {
+            connection.close();
+            response.status(500).json({ err });
+            resolve();
+          } else {
+            response.status(200).json(poke);
+            connection.close();
+            resolve();
+          }
+        });
+      },
+      POST: response => {
+        models.Pokemon.create(stuff, (err, rese) => {
+          if (err) {
+            connection.close();
+            response.status(500).json({ err });
+            resolve();
+          } else {
+            response.status(200).json(rese);
+            connection.close();
+            resolve();
+          }
+        });
+      }
+    });
   });
-};
+});
+
